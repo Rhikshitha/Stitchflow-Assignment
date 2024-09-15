@@ -1,0 +1,44 @@
+@import './styles/variables.css';
+
+body {
+background-color: var(--primary-bg);
+color: var(--text-color);
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+
+a {
+color: var(--link-color);
+text-decoration: none;
+}
+
+a:hover {
+opacity: 0.8;
+}
+
+button {
+background-color: var(--button-bg);
+color: white;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+button:hover {
+background-color: var(--button-hover-bg);
+}
+
+input, textarea {
+margin-left: 10px;
+width: 500px;
+border: 1px solid var(--border-color);
+padding: 10px;
+border-radius: 5px;
+}
+
+textarea {
+height: 100px;
+}

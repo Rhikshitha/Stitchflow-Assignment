@@ -1,0 +1,40 @@
+.post-card {
+background-color: var(--primary-bg);
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+padding: 16px;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+color: var(--text-color);
+}
+
+.post-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.post-title {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--text-color);
+margin-bottom: 8px;
+}
+
+.post-body {
+font-size: 1rem;
+color: var(--secondary-text-color);
+}
+
+.edit-button {
+background-color: var(--button-bg);
+color: var(--text-color);
+border: none;
+padding: 8px 12px;
+border-radius: 6px;
+cursor: pointer;
+margin-top: 10px;
+transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+background-color: var(--button-hover-bg);
+}

@@ -1,0 +1,10 @@
+:root {
+    --primary-bg: rgba(255, 182, 193, 0.2); 
+    --secondary-bg: rgba(255, 192, 203, 0.6);
+    --text-color: rgba(161, 51, 106, 0.9);
+    --link-color: rgba(161, 51, 106, 1); 
+    --button-bg: rgba(255, 105, 180, 1);
+    --button-hover-bg: rgba(255, 20, 147, 0.6);
+    --border-color: rgba(255, 182, 193, 1);
+}
+  
