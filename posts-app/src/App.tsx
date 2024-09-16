@@ -15,22 +15,52 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => response.json())
-      .then((data) => setPosts(data.slice(0, 10)));// Fetching only 10 posts from the API
+    const localPosts = localStorage.getItem('posts');
+    
+    if (localPosts) {
+      setPosts(JSON.parse(localPosts));
+    } else {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then((response) => response.json())
+        .then((data) => {
+          const initialPosts = data.slice(0, 10);
+          setPosts(initialPosts);
+          localStorage.setItem('posts', JSON.stringify(initialPosts));
+        });
+    }
   }, []);
 
-  const addPost = (newPost: Post) => {
-    setPosts([newPost, ...posts]);
+  // Add new post
+    const addPost = (newPost: Post) => {
+    const updatedPosts = [newPost, ...posts];
+    setPosts(updatedPosts);
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
   };
 
+  // Edit existing post
   const editPost = (updatedPost: Post) => {
-    setPosts(posts.map(post => post.id === updatedPost.id ? updatedPost : post));
+    const updatedPosts = posts.map(post =>
+      post.id === updatedPost.id ? updatedPost : post
+    );
+    setPosts(updatedPosts);
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
+  };
+
+  // Refresh to original posts from API
+  const refreshPosts = () => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((data) => {
+        const freshPosts = data.slice(0, 10);
+        setPosts(freshPosts);
+        localStorage.setItem('posts', JSON.stringify(freshPosts));
+      });
   };
 
   return (
     <div>
       <Navbar />
+      <button style={{ position: 'absolute', right: 0, top: '80px' }} onClick={refreshPosts}>Refresh to Original</button>
       <Routes>
         <Route path="/" element={<Home posts={posts} />} />
         <Route path="/add" element={<AddPost addPost={addPost} />} />
@@ -41,5 +71,6 @@ const App = () => {
 };
 
 export default App;
+
 
 

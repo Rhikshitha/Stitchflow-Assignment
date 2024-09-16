@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AddPost.css';
 
-type AddPostProps = {
-  addPost: (newPost: { id: number; title: string; body: string }) => void;
+type Post = {
+  id: number;
+  title: string;
+  body: string;
 };
 
-const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
+type AddPostProps = {
+  addPost: (newPost: Post) => void;
+};
+
+const AddPost = ({ addPost }: AddPostProps) => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const navigate = useNavigate();
@@ -14,35 +20,37 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newPost = {
-      id: Math.floor(Math.random() * 1000) + 101,
+      id: Date.now(),
       title,
       body,
     };
     addPost(newPost);
+    setTitle('');
+    setBody('');
     navigate('/'); 
   };
 
   return (
     <div className="form-container">
-      <h1>Add Post</h1>
+      <h2>Add New Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title">Title</label>
           <input
-            id="title"
+            id = "title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter post title"
+            placeholder="What's your thought?"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="body">Body:</label>
+          <label htmlFor="body">Body</label>
           <textarea
-            id="body"
+            id = "body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Enter post body"
+            placeholder="Elaborate your thoughts!"
           />
         </div>
         <button type="submit">Add Post</button>
@@ -52,4 +60,3 @@ const AddPost: React.FC<AddPostProps> = ({ addPost }) => {
 };
 
 export default AddPost;
-

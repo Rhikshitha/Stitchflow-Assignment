@@ -13,7 +13,7 @@ type HomeProps = {
   posts: Post[];
 };
 
-const Home: React.FC<HomeProps> = ({ posts }) => {
+const Home = ({ posts }: HomeProps) => {
   const navigate = useNavigate();
 
   const handleEdit = (id: number) => {
@@ -22,9 +22,9 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
 
   return (
     <div className="container">
-      <h1 className="title">🔥Explore What’s Hot & New!🚀 </h1>
+      <h1 className="title">🔥 Explore What’s Hot & New! 🚀</h1>
       <div className="posts-grid">
-        {posts.map(post => (
+        {posts.map((post) => (
           <Post key={post.id} {...post} onEdit={handleEdit} />
         ))}
       </div>
@@ -33,4 +33,3 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
 };
 
 export default Home;
-

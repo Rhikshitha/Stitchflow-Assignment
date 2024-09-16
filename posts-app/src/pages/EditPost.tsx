@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 type Post = {
@@ -12,55 +12,54 @@ type EditPostProps = {
   editPost: (updatedPost: Post) => void;
 };
 
-const EditPost: React.FC<EditPostProps> = ({ posts, editPost }) => {
-  const { postId } = useParams<{ postId: string }>();
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+const EditPost = ({ posts, editPost }: EditPostProps) => {
+  const { postId } = useParams();
   const navigate = useNavigate();
+  const post = posts.find((p) => p.id === parseInt(postId || '', 10));
 
-  useEffect(() => {
-    const postToEdit = posts.find(post => post.id === Number(postId));
-    if (postToEdit) {
-      setTitle(postToEdit.title);
-      setBody(postToEdit.body);
-    }
-  }, [postId, posts]);
+  const [title, setTitle] = useState(post?.title || '');
+  const [body, setBody] = useState(post?.body || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    editPost({ id: Number(postId), title, body });
-    navigate('/');
+    if (post) {
+      const updatedPost = { ...post, title, body };
+      editPost(updatedPost);
+      navigate('/');
+    }
   };
+
+  if (!post) {
+    return <p>Post not found</p>;
+  }
 
   return (
     <div className="form-container">
-      <h1>Edit Post</h1>
+      <h2>Edit Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title">Title</label>
           <input
             id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter post title"
+            placeholder="What's your thoughts?"
           />
         </div>
         <div className="form-group">
-          <label htmlFor="body">Body:</label>
+          <label htmlFor="body">Body</label>
           <textarea
             id="body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="Enter post body"
+            placeholder="Elaborate your thoughts!"
           />
         </div>
-        <button type="submit">Save Changes</button>
+        <button type="submit">Update Post</button>
       </form>
     </div>
   );
 };
 
 export default EditPost;
-
-
